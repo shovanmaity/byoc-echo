@@ -1,7 +1,8 @@
 FROM golang:1.23-alpine as builder
 WORKDIR /app
 COPY . .
-RUN make bin
+RUN go mod tidy
+RUN CGO_ENABLED=0 go build -o bin/app .
 RUN chmod +x bin/app
 
 FROM alpine:latest as certs
