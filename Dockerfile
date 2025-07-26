@@ -1,11 +1,10 @@
-FROM golang:1.23-alpine as builder
+FROM golang:1.24 AS builder
 WORKDIR /app
 COPY . .
-RUN go mod tidy
-RUN CGO_ENABLED=0 go build -o bin/app .
+RUN make bin
 RUN chmod +x bin/app
 
-FROM alpine:latest as certs
+FROM alpine:latest AS certs
 RUN apk --update add ca-certificates
 
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.8
