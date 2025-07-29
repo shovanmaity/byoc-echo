@@ -7,6 +7,7 @@ import (
 
 	"github.com/kelseyhightower/envconfig"
 	"github.com/sirupsen/logrus"
+	"gopkg.in/yaml.v3"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
@@ -36,7 +37,7 @@ func main() {
 		for _, con := range pod.Spec.Containers {
 			if strings.HasPrefix(con.Image, MatchImage) {
 				logrus.Infof("Found matching container in pod %s/%s: %s", pod.Namespace, pod.Name, con.Image)
-				podYaml, err := pod.Marshal()
+				podYaml, err := yaml.Marshal(pod)
 				if err != nil {
 					logrus.Errorf("Failed to marshal pod %s/%s: %v", pod.Namespace, pod.Name, err)
 					return
