@@ -41,7 +41,7 @@ func main() {
 					logrus.Errorf("Failed to marshal pod %s/%s: %v", pod.Namespace, pod.Name, err)
 					return
 				}
-				logrus.Infof("Pod YAML: \n %s", podYaml)
+				logrus.Infof("Pod YAML: \n %s", string(podYaml))
 				return
 			}
 		}
